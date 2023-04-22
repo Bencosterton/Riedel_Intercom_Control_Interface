@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload XML File</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+	<div class="xl-large">
+		<h1>Upload XML file</h1>
+	</div>
+	<br>
+	<div class="xl-large">
+		<h4>Choose an XML file:</h4>
+	</div>
+	<form id="xml-form" method="POST" enctype="multipart/form-data">
+		<label for="xml_file">   </label>
+		<input type="file" id="xml_file" name="xml_file"><br><br>
+		<button class="esbtn_blue button6" type="submit" id="submit-btn">Submit</button>
+	</form>
+	
+	<div id="response"></div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#xml-form').submit(function(e) {
+				e.preventDefault();
+				var form = $(this);
+				var formData = new FormData(form[0]);
+				$('#submit-btn').prop('disabled', true);
+				$('#response').html('Sending request to RRCS, please wait...');
+				$.ajax({
+					url: '/process_xml',
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						$('#response').html('<pre>' + data + '</pre>');
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						$('#response').html('Error sending request to RRCS: ' + errorThrown);
+					},
+					complete: function() {
+						$('#submit-btn').prop('disabled', false);
+						$('#xml-file').val('');
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>
