@@ -9,6 +9,7 @@
 		<h1>RRCS Web Interface</h1>
 	</div>
 	<br>
+	<!-- This is the xml upload -->
 	<div class="xl-large">
 		<h4>Choose an XML file:</h4>
 	</div>
@@ -17,7 +18,13 @@
 		<input type="file" id="xml_file" name="xml_file"><br><br>
 		<button class="esbtn_blue button6" type="submit" id="submit-btn">Submit</button>
 	</form>
-	
+	<!-- These are buttons  -->
+	<div class="xl-large">
+		<form id="buttons" method="post">
+			<button class="esbtn_blue button6" type="button" name="button001" onclick="button001_clicked();">Get ifb List</button>
+		</form>
+	</div>
+	<!-- This bit loads the response to the index.html page -->
 	<div id="response"></div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,6 +55,22 @@
 				});
 			});
 		});
+		
+        function button001_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button001');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+
+	
 	</script>
 </body>
 </html>
