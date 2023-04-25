@@ -10,7 +10,13 @@ margin: 0rem 1rem;
 }
 
 button {
-margin: 0.5rem;
+margin: 0rem;
+}
+
+#submit-btn, #get-ifb-list-btn, #xml_file {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px; 
 }
 
 div.font1 button {
@@ -30,19 +36,18 @@ font-family: Consolas, monaco, monospace;
 }
 
 h1, h2, h3, h4, h5 {
-  color: #FFF;
+  color: #f5f5f5;
   border-color: #dd0000;
   font-family: 'Public Sans', sans-serif;
   font-weight: 900;
   margin: 1.5rem 0 0.5rem 0;
-  text-transform: uppercase;
   line-height: 0.9;
   transition: all 250ms linear;
   font-variation-settings: 'wght' 50, 'wdth' 500;
 }
 
 pre {
-  color: #FFF;
+  color: #f5f5f5;
   border-color: #dd0000;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
@@ -57,7 +62,6 @@ input {
   font-family: 'Public Sans', sans-serif;
   font-weight: 900;
   margin: 1.5rem 0 0.5rem 0;
-  text-transform: uppercase;
   line-height: 0.9;
   transition: all 250ms linear;
   font-variation-settings: 'wght' 50, 'wdth' 500;
