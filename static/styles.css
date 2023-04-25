@@ -29,7 +29,7 @@ div.font4 button {
 font-family: Consolas, monaco, monospace;
 }
 
-h1, h2, h3, h4, h5, pre {
+h1, h2, h3, h4, h5 {
   color: #FFF;
   border-color: #dd0000;
   font-family: 'Public Sans', sans-serif;
@@ -37,6 +37,16 @@ h1, h2, h3, h4, h5, pre {
   margin: 1.5rem 0 0.5rem 0;
   text-transform: uppercase;
   line-height: 0.9;
+  transition: all 250ms linear;
+  font-variation-settings: 'wght' 50, 'wdth' 500;
+}
+
+pre {
+  color: #FFF;
+  border-color: #dd0000;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  line-height: 1;
   transition: all 250ms linear;
   font-variation-settings: 'wght' 50, 'wdth' 500;
 }
