@@ -8,6 +8,6 @@ Results from the server can be displayed in the user page;
 
 
 RRCS is a great tool for interfacing with the Artist system, but It doesn't come with any friendly out-of-the-box tools for submitting commands.
-Sometimes you want to limit an operators access to the system by provifing a cutomised interface, simplifed and taylor to their requiments.
+Sometimes you want to limit an operators access to the system by provifing a cutomised interface, simplifed and tailored to their requiments.
 
 This is that interface.
