@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+<methodName>SetXpVolume</methodName>
+<params>
+<param>
+  <value>C0123456789</value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>3</i4></value>
+  </param>
+<param>
+  <value><i4>9</i4></value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>3</i4></value>
+  </param>
+<param>
+  <value><i4>43</i4></value>
+  </param>
+<param>
+  <value><boolean>1</boolean></value>
+  </param>
+<param>
+  <value><boolean>0</boolean></value>
+  </param>
+<param>
+  <value><i4>200</i4></value>
+  </param>
+</params>
+</methodCall>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fader Test</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<script>
+	  function updateSliderValues(response) {
+		// Assuming the response is a dictionary with keys 'DIR2>TBU8' containing the 'i4' value
+		var value = response['DIR2>TBU8'];
+
+		// Check if the 'i4' value is a valid number
+		if (!isNaN(parseFloat(value))) {
+		  // Update the value of the fader_1 input slider
+		  document.getElementById('fader_1').value = parseFloat(value);
+		} else {
+		  console.error('Invalid value received from the server:', value);
+		}
+	  }
+
+	  function get_crosspoint_statuses() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/get_crosspoint_statuses');
+		xhr.send();
+
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			// Parse the JSON response from the server
+			var response = JSON.parse(xhr.responseText);
+
+			// Update the slider values
+			updateSliderValues(response);
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+
+	  // Call get_crosspoint_statuses to initially set the value
+	  get_crosspoint_statuses();
+
+	  // You can also set an interval to update the value periodically if needed
+	  setInterval(get_crosspoint_statuses, 2000);
+	</script>
+</head>
+
+<body>
+
+<div class"mixer">
+	<div class="audio-fader">
+		<input id="fader_1" type="range" class="fader" min="180" max="250" value="200" step="any" orient="vertical">
+		<input id="fader_2" type="range" class="fader" min="-27" max="12.5" value="0" step="any" orient="vertical">
+	</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+</script>
+</body>
+</html>
