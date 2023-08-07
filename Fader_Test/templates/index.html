@@ -45,16 +45,153 @@
 
 <body>
 
-<div class"mixer">
+<div class="mixer">
 	<div class="audio-fader">
-		<input id="fader_1" type="range" class="fader" min="180" max="250" value="200" step="any" orient="vertical">
-		<input id="fader_2" type="range" class="fader" min="-27" max="12.5" value="0" step="any" orient="vertical">
+		<input id="fader_1" type="range" class="fader" min="170" max="250" value="" step="any" orient="vertical">
+		<input id="fader_2" type="range" class="fader" min="-27" max="12.5" value="" step="any" orient="vertical">
 	</div>
 </div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+  // Add event listener to the fader_1 input slider
+  document.getElementById("fader_1").addEventListener("input", function() {
+    var value = parseFloat(this.value);
+    if (!isNaN(value)) {
+      // Trigger the appropriate function based on the slider value
+      if (value === 0) {
+        fader_1_mute();
+      } else if (value <= 170) {
+        fader_1_27();
+      } else if (value > 170 && value <= 190) {
+        fader_1_20();
+      } else if (value > 190 && value <= 200) {
+        fader_1_12();
+      } else if (value > 200 && value <= 220) {
+        fader_1_6();
+      } else if (value > 220 && value <= 230) {
+        fader_1_0();
+      } else if (value > 230 && value <= 240) {
+        fader_1_5();
+      } else if (value > 240 && value <= 250) {
+        fader_1_13();
+      }
+    }
+  });
+
+  function fader_1_mute() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_mute');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+
+  function fader_1_27() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_-27');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+  
+  function fader_1_20() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_-20');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+  
+  function fader_1_12() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_-12');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+  
+  function fader_1_6() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_-6');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+
+  function fader_1_0() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_0');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+
+  function fader_1_5() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_+5');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
+
+  function fader_1_13() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '/fader_1_+13');
+	xhr.send();
+
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		document.getElementById("response").innerHTML = xhr.responseText;
+	  } else {
+		alert('Request failed. Status: ' + xhr.status);
+	  }
+	};
+  }
 
 
 </script>
