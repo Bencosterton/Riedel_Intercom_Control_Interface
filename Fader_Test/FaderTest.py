@@ -19,7 +19,179 @@ def index():
     return render_template('index.html')
 
 #############################################
-############# Fader Functions  ##############
+########### Send Fader values  ##############
+#############################################
+
+@app.route('/fader_1_mute', methods=['POST', 'GET'])
+def fader_1_mute():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXPmute.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_-27', methods=['POST', 'GET'])
+def fader_1_27():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP-27dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+
+@app.route('/fader_1_-20', methods=['POST', 'GET'])
+def fader_1_20():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP-20dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_-12', methods=['POST', 'GET'])
+def fader_1_12():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP-12dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_-6', methods=['POST', 'GET'])
+def fader_1_6():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP-6dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_0', methods=['POST', 'GET'])
+def fader_1_0():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP0dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_+5', methods=['POST', 'GET'])
+def fader_1_5():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP+5dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+    
+@app.route('/fader_1_+13', methods=['POST', 'GET'])
+def fader_1_13():
+    # Get the absolute path of the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path of the XML files
+    xml_files = ['DIR2_to_TBU8_SetXP+13dB.xml']    
+    # Set the server address and port number
+    server_address = 'http://10.9.82.100:8193'
+    # Set the HTTP headers
+    headers = {'Content-Type': 'text/xml'}   
+    # Read the XML data from files and send the HTTP POST request to the server
+    for xml_file in xml_files:
+        # Construct the absolute path of the XML file
+        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
+        # Read the XML data from file
+        with open(xml_file_path, 'r') as f:
+            xml_data = f.read()           
+        # Send the HTTP POST request to the server
+        requests.post(server_address, data=xml_data, headers=headers)
+    return ' '
+        
+#############################################
+########## Update Fader Value  ##############
 #############################################
 
 
