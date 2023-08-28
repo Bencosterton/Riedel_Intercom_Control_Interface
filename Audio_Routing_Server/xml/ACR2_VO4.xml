@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+<methodName>SetLogicSourceState</methodName>
+<params>
+<param>
+  <value>C0000009044</value>
+  </param>
+<param>
+  <value><i4>490552127</i4></value>
+  </param>
+<param>
+  <value><boolean>1</boolean></value>
+  </param>
+</params>
+</methodCall>

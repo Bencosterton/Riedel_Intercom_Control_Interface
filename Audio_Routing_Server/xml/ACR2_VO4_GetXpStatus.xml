@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+<methodName>GetXpStatus</methodName>
+<params>
+<param>
+  <value>C0123456789</value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>2</i4></value>
+  </param>
+<param>
+  <value><i4>43</i4></value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>2</i4></value>
+  </param>
+<param>
+  <value><i4>70</i4></value>
+  </param>
+</params>
+</methodCall>
