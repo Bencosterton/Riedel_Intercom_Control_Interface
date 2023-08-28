@@ -1,0 +1,142 @@
+<!-- Riedel, If you are reading this, I have made this out of admiration for your system. No intention to plagiarize anything. -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RRCS Web Interface</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+	<div class="xl-large">
+		<h1>RRCS Web Interface</h1>
+	</div>
+	
+	<br>
+	<!-- This is the xml upload -->
+	<div class="xl-large">
+		<h4>Choose an XML file:</h4>
+	</div>
+	<form id="xml-form" method="POST" enctype="multipart/form-data">
+		<label for="xml_file">   </label>
+		<input type="file" id="xml_file" name="xml_file"><br><br>
+		<button class="esbtn_blue button6" type="submit" id="submit-btn">Submit</button>
+	</form>
+	<!-- These are buttons  -->
+	<div class="xl-large">
+		<h4>Get info about the system:</h4>
+	</div>
+	<div class="xl-large">
+		<form id="buttons" method="post">
+			<button class="esbtn_blue button6" type="button" name="button001" onclick="button001_clicked();">Get ifb List</button>
+			<button class="esbtn_blue button6" type="button" name="button002" onclick="button002_clicked();">Get Logic Sources</button>
+			<button class="esbtn_blue button6" type="button" name="button003" onclick="button003_clicked();">Get Port</button>
+			<button class="esbtn_blue button6" type="button" name="button004" onclick="button004_clicked();">Print Error Codes</button>
+			<button class="esbtn_blue button6" type="button" name="button005" onclick="button005_clicked();">Is Artist There?</button>
+		</form>
+	</div>
+	<!-- This bit loads the response to the index.html page -->
+	<div id="response"></div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#xml-form').submit(function(e) {
+				e.preventDefault();
+				var form = $(this);
+				var formData = new FormData(form[0]);
+				$('#submit-btn').prop('disabled', true);
+				$('#response').html('Sending request to RRCS, please wait...');
+				$.ajax({
+					url: '/process_xml',
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						$('#response').html('<pre>' + data + '</pre>');
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						$('#response').html('Error sending request to RRCS: ' + errorThrown);
+					},
+					complete: function() {
+						$('#submit-btn').prop('disabled', false);
+						$('#xml-file').val('');
+					}
+				});
+			});
+		});
+		
+        function button001_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button001');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+		
+		function button002_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button002');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+		
+		function button003_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button003');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+		
+		function button004_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button004');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+		
+		function button005_clicked() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/button005');
+			xhr.send();
+    
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById("response").innerHTML = xhr.responseText;
+				} else {
+					alert('Request failed. Status: ' + xhr.status);
+				}
+			};
+		}
+
+	
+	</script>
+</body>
+</html>
