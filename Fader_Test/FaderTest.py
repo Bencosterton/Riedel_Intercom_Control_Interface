@@ -29,7 +29,7 @@ def fader_1_mute():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXPmute.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -50,7 +50,7 @@ def fader_1_27():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP-27dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -71,7 +71,7 @@ def fader_1_20():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP-20dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -92,7 +92,7 @@ def fader_1_12():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP-12dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -113,7 +113,7 @@ def fader_1_6():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP-6dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -134,7 +134,7 @@ def fader_1_0():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP0dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -155,7 +155,7 @@ def fader_1_5():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP+5dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -176,7 +176,7 @@ def fader_1_13():
     # Construct the absolute path of the XML files
     xml_files = ['DIR2_to_TBU8_SetXP+13dB.xml']    
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}   
     # Read the XML data from files and send the HTTP POST request to the server
@@ -200,7 +200,7 @@ def get_crosspoint_statuses():
     # Get the absolute path of the directory containing this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
+    server_address = 'SERVER_ADDRESS'
     # Set the HTTP headers
     headers = {'Content-Type': 'text/xml'}
     # Define the XML files to send for checking crosspoint statuses
