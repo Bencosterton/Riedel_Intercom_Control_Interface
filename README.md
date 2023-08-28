@@ -2,6 +2,7 @@
 An interface for Riedels RRCS service, used to control the Riedel Intercom Martix.
 
 Example: Audio routing with realtime cross-point feedback to interface;
+![RRCS_Audio_Routing](https://github.com/Bencosterton/Riedel_Intercom_Control_Interface/assets/21957617/82c18f99-d833-453d-a86a-fa2f68e2fc81)
 
 Example: Audio routing and quick config changes;
 ![RRCS_Audio001](https://github.com/Bencosterton/Riedel_Intercom_Control_Interface/assets/21957617/3e0d7d87-476b-4f5b-9890-486fbdac3327)
