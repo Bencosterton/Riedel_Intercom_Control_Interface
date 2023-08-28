@@ -1,736 +1,574 @@
-from flask import Flask, render_template, request, jsonify
-import os
-import requests
-import socket
-import xml.etree.ElementTree as ET
-import schedule
-import time
-import threading
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ACR VO Routing</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='VORoutingStyles.css') }}">
+	<script>
+	  function get_crosspoint_statuses() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/get_crosspoint_statuses');
+		xhr.send();
 
-app = Flask(__name__, static_folder='static')
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			// Parse the JSON response from the server
+			var response = JSON.parse(xhr.responseText);
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    # Fetch the crosspoint statuses from the audio router
-    crosspoint_statuses = get_crosspoint_statuses()
-    # Pass the crosspoint_statuses dictionary to the template
-    return render_template('VORouting.html', crosspoint_statuses=crosspoint_statuses)
+			// Call the function to update the button status
+			updateButtonStatuses(response);
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    return get_crosspoint_statuses()
+	  // Function to update the button status based on the response
+	  function updateButtonStatuses(response) {
+		var statusButton11 = document.getElementById("ACR1_VO1_button");
+		var statusButton12 = document.getElementById("ACR1_VO2_button");
+		var statusButton13 = document.getElementById("ACR1_VO3_button");
+		var statusButton14 = document.getElementById("ACR1_VO4_button");
+		var statusButton15 = document.getElementById("ACR1_VO5_button");
+		var statusButton21 = document.getElementById("ACR2_VO1_button");
+		var statusButton22 = document.getElementById("ACR2_VO2_button");
+		var statusButton23 = document.getElementById("ACR2_VO3_button");
+		var statusButton24 = document.getElementById("ACR2_VO4_button");
+		var statusButton25 = document.getElementById("ACR2_VO5_button");
+		var statusButton31 = document.getElementById("ACR3_VO1_button");
+		var statusButton32 = document.getElementById("ACR3_VO2_button");
+		var statusButton33 = document.getElementById("ACR3_VO3_button");
+		var statusButton34 = document.getElementById("ACR3_VO4_button");
+		var statusButton35 = document.getElementById("ACR3_VO5_button");
+
+		if (response['ACR1_VO1'] === true) {
+		  statusButton11.style.backgroundColor = "#ff6363";
+		  statusButton11.innerHTML = "VO 1";
+		} else {
+		  statusButton11.style.backgroundColor = "#f0f0f0";
+		  statusButton11.innerHTML = "VO 1";
+		}
+
+		if (response['ACR1_VO2'] === true) {
+		  statusButton12.style.backgroundColor = "#ff6363";
+		  statusButton12.innerHTML = "VO 2";
+		} else {
+		  statusButton12.style.backgroundColor = "#f0f0f0";
+		  statusButton12.innerHTML = "VO 2";
+		}
+
+		if (response['ACR1_VO3'] === true) {
+		  statusButton13.style.backgroundColor = "#ff6363";
+		  statusButton13.innerHTML = "VO 3";
+		} else {
+		  statusButton13.style.backgroundColor = "#f0f0f0";
+		  statusButton13.innerHTML = "VO 3";
+		}
+		
+		if (response['ACR1_VO4'] === true) {
+		  statusButton14.style.backgroundColor = "#ff6363";
+		  statusButton2.innerHTML = "VO 4";
+		} else {
+		  statusButton14.style.backgroundColor = "#f0f0f0";
+		  statusButton14.innerHTML = "VO 4";
+		}
+
+		if (response['ACR1_VO5'] === true) {
+		  statusButton15.style.backgroundColor = "#ff6363";
+		  statusButton15.innerHTML = "VO 5";
+		} else {
+		  statusButton15.style.backgroundColor = "#f0f0f0";
+		  statusButton15.innerHTML = "VO 5";
+		}
+		
+		if (response['ACR2_VO1'] === true) {
+		  statusButton21.style.backgroundColor = "#ff6363";
+		  statusButton21.innerHTML = "VO 1";
+		} else {
+		  statusButton21.style.backgroundColor = "#f0f0f0";
+		  statusButton21.innerHTML = "VO 1";
+		}
+
+		if (response['ACR2_VO2'] === true) {
+		  statusButton22.style.backgroundColor = "#ff6363";
+		  statusButton22.innerHTML = "VO 2";
+		} else {
+		  statusButton22.style.backgroundColor = "#f0f0f0";
+		  statusButton22.innerHTML = "VO 2";
+		}
+
+		if (response['ACR2_VO3'] === true) {
+		  statusButton23.style.backgroundColor = "#ff6363";
+		  statusButton23.innerHTML = "VO 3";
+		} else {
+		  statusButton23.style.backgroundColor = "#f0f0f0";
+		  statusButton23.innerHTML = "VO 3";
+		}
+		
+		if (response['ACR2_VO4'] === true) {
+		  statusButton24.style.backgroundColor = "#ff6363";
+		  statusButton24.innerHTML = "VO 4";
+		} else {
+		  statusButton24.style.backgroundColor = "#f0f0f0";
+		  statusButton24.innerHTML = "VO 4";
+		}
+
+		if (response['ACR2_VO5'] === true) {
+		  statusButton25.style.backgroundColor = "#ff6363";
+		  statusButton25.innerHTML = "VO 5";
+		} else {
+		  statusButton25.style.backgroundColor = "#f0f0f0";
+		  statusButton25.innerHTML = "VO 5";
+		}
+		
+		if (response['ACR3_VO1'] === true) {
+		  statusButton31.style.backgroundColor = "#ff6363";
+		  statusButton31.innerHTML = "VO 1";
+		} else {
+		  statusButton31.style.backgroundColor = "#f0f0f0";
+		  statusButton31.innerHTML = "VO 1";
+		}
+
+		if (response['ACR3_VO2'] === true) {
+		  statusButton32.style.backgroundColor = "#ff6363";
+		  statusButton32.innerHTML = "VO 2";
+		} else {
+		  statusButton32.style.backgroundColor = "#f0f0f0";
+		  statusButton32.innerHTML = "VO 2";
+		}
+
+		if (response['ACR3_VO3'] === true) {
+		  statusButton33.style.backgroundColor = "#ff6363";
+		  statusButton33.innerHTML = "VO 3";
+		} else {
+		  statusButton33.style.backgroundColor = "#f0f0f0";
+		  statusButton33.innerHTML = "VO 3";
+		}
+		
+		if (response['ACR3_VO4'] === true) {
+		  statusButton34.style.backgroundColor = "#ff6363";
+		  statusButton34.innerHTML = "VO 4";
+		} else {
+		  statusButton34.style.backgroundColor = "#f0f0f0";
+		  statusButton34.innerHTML = "VO 4";
+		}
+
+		if (response['ACR3_VO5'] === true) {
+		  statusButton35.style.backgroundColor = "#ff6363";
+		  statusButton35.innerHTML = "VO 5";
+		} else {
+		  statusButton35.style.backgroundColor = "#f0f0f0";
+		  statusButton35.innerHTML = "VO 5";
+		}
+
+	  }
+
+	  // Start the interval to run the function every 2 seconds (2000 milliseconds)
+	  setInterval(get_crosspoint_statuses, 2000);
+	</script>
+</head>
+<body>
+    <div class="xl-large" id="Page_Name">
+        <h2>ACR VO Routing</h2>
+    </div>
+
+    <div class="ACR_1-container">
+        <div>
+            <h3> ACR 1 </h3>
+        </div>
+        <div class="ACR_1-box">
+			<button id="ACR1_VO1_button" {% if crosspoint_statuses['ACR1_VO1'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR1_VO1')">VO 1</button>
+			<button id="ACR1_VO2_button" {% if crosspoint_statuses['ACR1_VO2'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR1_VO2')">VO 2</button>
+			<button id="ACR1_VO3_button" {% if crosspoint_statuses['ACR1_VO3'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR1_VO3')">VO 3</button>
+			<button id="ACR1_VO4_button" {% if crosspoint_statuses['ACR1_VO4'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR1_VO4')">VO 4</button>
+			<button id="ACR1_VO5_button" {% if crosspoint_statuses['ACR1_VO5'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR1_VO5')">VO 5</button>
+        </div>
+    </div>
+
+    <div class="ACR_2-container">
+        <div>
+            <h3> ACR 2 </h3>
+        </div>
+        <div class="ACR_2-box">
+			<button id="ACR2_VO1_button" {% if crosspoint_statuses['ACR2_VO1'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR2_VO1')">VO 1</button>
+			<button id="ACR2_VO2_button" {% if crosspoint_statuses['ACR2_VO2'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR2_VO2')">VO 2</button>
+			<button id="ACR2_VO3_button" {% if crosspoint_statuses['ACR2_VO3'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR2_VO3')">VO 3</button>
+			<button id="ACR2_VO4_button" {% if crosspoint_statuses['ACR2_VO4'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR2_VO4')">VO 4</button>
+			<button id="ACR2_VO5_button" {% if crosspoint_statuses['ACR2_VO5'] %}class="button-on"{% else %}class="button-off"{% endif %} onclick="handleButtonClick('ACR2_VO5')">VO 5</button>
+        </div>
+    </div>
+
+    <div class="ACR_3-container">
+        <div>
+            <h3> ACR 3 </h3>
+		</div>
+		<div class="ACR_3-box">
+			<button id="ACR3_VO1_button" {% if crosspoint_statuses['ACR3_VO1'] %}class="button-on"{% else %}class="button-off"{% endif %} >VO 1</button>
+			<button id="ACR3_VO2_button" {% if crosspoint_statuses['ACR3_VO2'] %}class="button-on"{% else %}class="button-off"{% endif %} >VO 2</button>
+			<button id="ACR3_VO3_button" {% if crosspoint_statuses['ACR3_VO3'] %}class="button-on"{% else %}class="button-off"{% endif %} >VO 3</button>
+			<button id="ACR3_VO4_button" {% if crosspoint_statuses['ACR3_VO4'] %}class="button-on"{% else %}class="button-off"{% endif %} >VO 4</button>
+			<button id="ACR3_VO5_button" {% if crosspoint_statuses['ACR3_VO5'] %}class="button-on"{% else %}class="button-off"{% endif %} >VO 5</button>
+        </div>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+	  function handleButtonClick(crosspointId) {
+		var button = document.getElementById(crosspointId + '_button');
+		if (button.classList.contains('button-on')) {
+		  // Button is currently on, turn it off
+		  turnSDIOff(crosspointId);
+		} else {
+		  // Button is currently off, turn it on
+		  turnSDIOn(crosspointId);
+		}
+	  }
+
+	  function turnSDIOn(crosspointId) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/' + crosspointId + '_on');
+		xhr.send();
+
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			// Request was successful, update button state to 'on'
+			document.getElementById(crosspointId + '_button').classList.add('button-on');
+			document.getElementById(crosspointId + '_button').classList.remove('button-off');
+		  } else {
+			// Request failed, handle the error if needed
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+
+	  function turnSDIOff(crosspointId) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/' + crosspointId + '_off');
+		xhr.send();
+
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			// Request was successful, update button state to 'off'
+			document.getElementById(crosspointId + '_button').classList.add('button-off');
+			document.getElementById(crosspointId + '_button').classList.remove('button-on');
+		  } else {
+			// Request failed, handle the error if needed
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+			
+	  function handleCheckboxChange(checkbox) {
+		if (checkbox.checked) {
+		  if (checkbox.id === "ACR1_VO1_on") {
+			ACR1_VO1_on();
+		  } else if (checkbox.id === "ACR1_VO2_on") {
+			ACR1_VO2_on();
+		  } else if (checkbox.id === "ACR1_VO3_on") {
+			ACR1_VO3_on_on();
+		  } else if (checkbox.id === "ACR1_VO4_on") {
+			ACR1_VO4_on_on();
+		  } else if (checkbox.id === "ACR1_VO5_on") {
+			ACR1_VO5_on_on();
+		  }
+		} else {
+		  if (checkbox.id === "ACR1_VO1_on") {
+			ACR1_VO1_off();
+		  } else if (checkbox.id === "ACR1_VO2_on") {
+			ACR1_VO2_off();
+		  } else if (checkbox.id === "ACR1_VO3_on") {
+			ACR1_VO3_off();
+		  } else if (checkbox.id === "ACR1_VO4_on") {
+			ACR1_VO4_off();
+		  } else if (checkbox.id === "ACR1_VO5_on") {
+			ACR1_VO5_off();
+		  }
+		}
+	  }
+  
     
+	  function ACR1_VO1_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO1_on');
+		xhr.send();
 
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-#############################################
-################ VO Routing  ################
-#############################################
+	  function ACR1_VO1_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO1_off');
+		xhr.send();
 
-@app.route('/ACR1_VO1_on', methods=['POST', 'GET'])
-def ACR1_VO1_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR1_to_VO1_SetXP.xml', 'VO1_to_ACR1_SetXP.xml' ,'VO1_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR1_VO2_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO2_on');
+		xhr.send();
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO1_G1.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR1_VO1_off', methods=['POST', 'GET'])
-def ACR1_VO1_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO1_to_ACR1_KillXP.xml','ACR1_to_VO1_KillXP.xml', 'VO1_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-@app.route('/ACR1_VO2_on', methods=['POST', 'GET'])
-def ACR1_VO2_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR1_to_VO2_SetXP.xml', 'VO2_to_ACR1_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+	  function ACR1_VO2_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO2_off');
+		xhr.send();
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR1_VO3_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO3_on');
+		xhr.send();
 
-@app.route('/ACR1_VO2_off', methods=['POST', 'GET'])
-def ACR1_VO2_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO2_to_ACR1_KillXP.xml','ACR1_to_VO2_KillXP.xml',]    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
-    
-@app.route('/ACR1_VO3_on', methods=['POST', 'GET'])
-def ACR1_VO3_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR1_to_VO3_SetXP.xml', 'VO3_to_ACR1_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR1_VO3_off', methods=['POST', 'GET'])
-def ACR1_VO3_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO3_to_ACR1_KillXP.xml','ACR1_to_VO3_KillXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
-    
-@app.route('/ACR1_VO4_on', methods=['POST', 'GET'])
-def ACR1_VO4_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR1_to_VO4_SetXP.xml', 'VO4_to_ACR1_SetXP.xml' ,'VO4_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+	  function ACR1_VO3_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO3_off');
+		xhr.send();
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO4_G1.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR1_VO4_off', methods=['POST', 'GET'])
-def ACR1_VO4_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO4_to_ACR1_KillXP.xml','ACR1_to_VO4_KillXP.xml', 'VO4_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-@app.route('/ACR1_VO5_on', methods=['POST', 'GET'])
-def ACR1_VO5_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR1_to_VO5_SetXP.xml', 'VO5_to_ACR1_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+	  function ACR1_VO4_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO4_on');
+		xhr.send();
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR1_VO5_off', methods=['POST', 'GET'])
-def ACR1_VO5_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO5_to_ACR1_KillXP.xml','ACR1_to_VO5_KillXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
+	  function ACR1_VO4_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO4_off');
+		xhr.send();
 
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR1_VO5_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO5_on');
+		xhr.send();
 
-@app.route('/ACR2_VO1_on', methods=['POST', 'GET'])
-def ACR2_VO1_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_to_VO1_SetXP.xml', 'VO1_to_ACR2_SetXP.xml', 'ACR2_VO_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_VO1.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR2_VO1_off', methods=['POST', 'GET'])
-def ACR2_VO1_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO1_to_ACR2_KillXP.xml','ACR2_to_VO1_KillXP.xml', 'VO1_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+	  function ACR1_VO5_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR1_VO5_off');
+		xhr.send();
 
-@app.route('/ACR2_VO2_on', methods=['POST', 'GET'])
-def ACR2_VO2_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_to_VO2_SetXP.xml', 'VO2_to_ACR2_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
+	  function ACR2_VO1_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO1_on');
+		xhr.send();
 
-@app.route('/ACR2_VO2_off', methods=['POST', 'GET'])
-def ACR2_VO2_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO2_to_ACR2_KillXP.xml','ACR2_to_VO2_KillXP.xml',]    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
-    
-@app.route('/ACR2_VO3_on', methods=['POST', 'GET'])
-def ACR2_VO3_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_to_VO3_SetXP.xml', 'VO3_to_ACR2_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR2_VO3_off', methods=['POST', 'GET'])
-def ACR2_VO3_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO3_to_ACR2_KillXP.xml','ACR2_to_VO3_KillXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
-    
-@app.route('/ACR2_VO4_on', methods=['POST', 'GET'])
-def ACR2_VO4_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_to_VO4_SetXP.xml', 'VO4_to_ACR2_SetXP.xml', 'ACR2_VO_PARK.xml', 'VO4_PARK_Pres4.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+	  function ACR2_VO1_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO1_off');
+		xhr.send();
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_VO4.xml', 'VO4_G2_Pres4.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR2_VO4_off', methods=['POST', 'GET'])
-def ACR2_VO4_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO4_to_ACR2_KillXP.xml','ACR2_to_VO4_KillXP.xml', 'VO4_PARK.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR2_VO2_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO2_on');
+		xhr.send();
 
-@app.route('/ACR2_VO5_on', methods=['POST', 'GET'])
-def ACR2_VO5_on():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['ACR2_to_VO5_SetXP.xml', 'VO5_to_ACR2_SetXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-    # reasign the panel
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = []    
-    # Set the server address and port numbers
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)       
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)   
-    return ' '
-    
-@app.route('/ACR2_VO5_off', methods=['POST', 'GET'])
-def ACR2_VO5_off():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construct the absolute path of the XML files
-    xml_files = ['VO5_to_ACR2_KillXP.xml','ACR2_to_VO5_KillXP.xml']    
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}   
-    # Read the XML data from files and send the HTTP POST request to the server
-    for xml_file in xml_files:
-        # Construct the absolute path of the XML file
-        xml_file_path = os.path.join(script_dir, 'xml', xml_file)        
-        # Read the XML data from file
-        with open(xml_file_path, 'r') as f:
-            xml_data = f.read()           
-        # Send the HTTP POST request to the server
-        requests.post(server_address, data=xml_data, headers=headers)
-        
-    return ' '
+	  function ACR2_VO2_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO2_off');
+		xhr.send();
 
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR2_VO3_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO3_on');
+		xhr.send();
 
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    
-########################################
-## Checking the crosspoints in Artist ##
-########################################
+	  function ACR2_VO3_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO3_off');
+		xhr.send();
 
-@app.route('/get_crosspoint_statuses', methods=['POST', 'GET'])
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-def get_crosspoint_statuses():
-    # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Set the server address and port number
-    server_address = 'http://10.9.82.100:8193'
-    # Set the HTTP headers
-    headers = {'Content-Type': 'text/xml'}
-    # Define the XML files to send for checking crosspoint statuses
-    xml_files = {
-        'ACR1_VO1_GetXpStatus.xml': 'ACR1_VO1',
-        'ACR1_VO2_GetXpStatus.xml': 'ACR1_VO2',
-        'ACR1_VO3_GetXpStatus.xml': 'ACR1_VO3',
-        'ACR1_VO4_GetXpStatus.xml': 'ACR1_VO4',
-        'ACR1_VO5_GetXpStatus.xml': 'ACR1_VO5',
-        'ACR2_VO1_GetXpStatus.xml': 'ACR2_VO1',
-        'ACR2_VO2_GetXpStatus.xml': 'ACR2_VO2',
-        'ACR2_VO3_GetXpStatus.xml': 'ACR2_VO3',
-        'ACR2_VO4_GetXpStatus.xml': 'ACR2_VO4',
-        'ACR2_VO5_GetXpStatus.xml': 'ACR2_VO5',
-    }
+	  function ACR2_VO4_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO4_on');
+		xhr.send();
 
-    # Initialize the crosspoint statuses dictionary
-    crosspoint_statuses = {}
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-    # Send a request to each XML file and store the status in the dictionary
-    for xml_file, key in xml_files.items():
-        # Construct the absolute path of the XML file
-        xml_path = os.path.join(script_dir, 'xml', xml_file)
+	  function ACR2_VO4_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO4_off');
+		xhr.send();
 
-        # Read the XML data from file
-        with open(xml_path, 'r') as f:
-            xml_data = f.read()
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
+	  
+	  function ACR2_VO5_on() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO5_on');
+		xhr.send();
 
-        try:
-            # Send the HTTP POST request to the server
-            response = requests.post(server_address, data=xml_data, headers=headers)
-            response.raise_for_status()  # Raise an exception if status code is 4xx or 5xx
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-            # Get the response text and process it
-            response_text = response.text
-            has_error, message = process_boolean_response(response_text)  # No need to pass display_name anymore
+	  function ACR2_VO5_off() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/ACR2_VO5_off');
+		xhr.send();
 
-            # Store the status in the crosspoint statuses dictionary
-            crosspoint_statuses[key] = not has_error  # We negate the has_error value as 'True' means the crosspoint is active
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+			document.getElementById("response").innerHTML = xhr.responseText;
+		  } else {
+			alert('Request failed. Status: ' + xhr.status);
+		  }
+		};
+	  }
 
-        except requests.exceptions.RequestException as e:
-            # Handle the exception by setting the status to False
-            crosspoint_statuses[key] = False
-
-    return jsonify(crosspoint_statuses)
-
-##############################
-# Checking response messages #
-##############################
-
-def process_boolean_response(response):
-    root = ET.fromstring(response)
-    boolean_value = None
-
-    for data in root.findall('./params/param/value/array/data'):
-        for value in data.findall('value'):
-            if value.find('boolean') is not None:
-                boolean_value = value.find('boolean').text.strip() == "0"
-                break
-        if boolean_value is not None:
-            break
-
-    if boolean_value is None:
-        return (False, "No boolean value found")
-    elif boolean_value:
-        return (True, "")
-    else:
-        return (False, "")
-
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5010)
+    </script>
+</body>
+</html>
