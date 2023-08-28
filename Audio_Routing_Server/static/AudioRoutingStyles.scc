@@ -1,0 +1,141 @@
+html {
+  background: #F8F6F2;
+  display: grid;
+  font-size: 20px;
+}
+div {
+  margin: 0rem 1rem;
+  width: 80px;
+}
+button {
+  margin: 0.5rem;
+}
+
+div.font1 button {
+  font-family: 'Lato', sans-serif;
+}
+div.font2 button {
+  font-family: "Playfair Display", "Didot", "Times New Roman", Times, serif;
+}
+div.font3 button {
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+div.font4 button {
+  font-family: Consolas, monaco, monospace;
+}
+h1, h2, h3, h4, h5 {
+  color: #FF9900;
+  border-color: #FF9900;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 900;
+  margin: 1.5rem 10 0.5rem 0;
+  text-transform: uppercase;
+  line-height: 0.9;
+  transition: all 250ms linear;
+  font-variation-settings: 'wght' 50, 'wdth' 500;
+}
+
+#Page_Name {
+  color: #FF9900;
+  border-color: #FF9900;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 900;
+  margin: 1.5rem 0 0.5rem 0;
+  text-transform: uppercase;
+  line-height: 0.9;
+  transition: all 250ms linear;
+  font-variation-settings: 'wght' 50, 'wdth' 500;
+  display: inline-block;
+  float: right;
+  width: 80%;
+  position: absolute;
+  top: -10px;
+  left: 140px;
+  font-size: 2rem;
+}
+
+.ACR_1-container {
+	display: flex;
+	float: right;
+	position: absolute;
+	top: 150px;
+	left: 100px;
+}
+
+.ACR_1-box {
+	border-radius: 25px;
+	background-color: #FF;
+	padding: 5px;
+	margin-top: 5px;
+	border: 4px solid #FF9900;
+	position: absolute;
+	top: 70px;
+	left: 0px;
+	width: 400px;
+}
+
+
+.ACR_2-container {
+	display: flex;
+	float: right;
+	position: absolute;
+	top: 150px;
+	left: 600px;
+}
+
+.ACR_2-box {
+	border-radius: 25px;
+	background-color: #FF;
+	padding: 5px;
+	margin-top: 5px;
+	border: 4px solid #FF9900;
+	position: absolute;
+	top: 70px;
+	left: 0px;
+	width: 400px;
+}
+
+.ACR_3-container {
+	display: flex;
+	float: right;
+	position: absolute;
+	top: 150px;
+	left: 1100px;
+}
+
+.ACR_3-box {
+	border-radius: 25px;
+	background-color: #FF;
+	padding: 5px;
+	margin-top: 5px;
+	border: 4px solid #FF9900;
+	position: absolute;
+	top: 70px;
+	left: 0px;
+	width: 400px;
+}
+
+/*  BUTTONS  */
+.button-on {
+  display: inline-block;
+  position: relative;
+  left: 25px;
+  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: all .5s;
+  width: 150px;
+  height: 150px;
+}
+
+.button-off {
+  display: inline-block;
+  position: relative;
+  left: 25px;
+  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: all .5s;
+  width: 150px;
+  height: 150px;
+}
