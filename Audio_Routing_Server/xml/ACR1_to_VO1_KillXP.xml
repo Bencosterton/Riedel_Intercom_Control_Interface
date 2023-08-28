@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+<methodName>KillXP</methodName>
+<params>
+<param>
+  <value>C0000009050</value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>2</i4></value>
+  </param>
+<param>
+  <value><i4>69</i4></value>
+  </param>
+<param>
+  <value><i4>1</i4></value>
+  </param>
+<param>
+  <value><i4>4</i4></value>
+  </param>
+<param>
+  <value><i4>32</i4></value>
+  </param>
+</params>
+</methodCall>
