@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<methodCall>
+<methodName>ConfigurationChange</methodName>
+<params>
+<param>
+  <value>C0000000001</value>
+  </param>
+<param>
+  <value><array><data>
+    <value><struct>
+      <member>
+        <name>ChangeType</name>
+        <value>edit</value>
+        </member>
+      <member>
+        <name>ObjectType</name>
+        <value>ifb</value>
+        </member>
+      <member>
+        <name>SpecificParams</name>
+        <value><struct>
+          <member>
+            <name>IFBNumber</name>
+            <value><i4>2</i4></value>
+            </member>
+        <member>
+            <name>Input</name>
+			<value>
+			<struct>
+		  <member>
+		    <name>Node</name>
+            <value><i4>2</i4></value>
+            </member>
+          <member>
+            <name>Port</name>
+            <value><i4>36</i4></value>
+            </member>
+	      <member>
+            <name>IsInput</name>
+            <value><boolean>1</boolean></value>
+			</member>
+			</struct>
+			</value>
+		</member>
+        </struct></value>
+	  </member>
+    </struct></value>
+  </data></array></value>
+</param>
+</params>
+</methodCall>
