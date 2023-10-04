@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<methodCall>
+<methodName>ConfigurationChange</methodName>
+<params>
+<param>
+	<value>C0000000003</value>
+	</param>
+<param>
+	<value><array><data>
+		<value><struct>
+			<member>
+				<name>ChangeType</name>
+				<value>create</value>
+				</member>
+			<member>
+				<name>ObjectType</name>
+				<value>call-to-port-cmd</value>
+				</member>
+			<member>
+				<name>SpecificParams</name>
+				<value><struct>
+					<member>
+						<name>CommandPosition</name>
+						<value><struct>
+							<member>
+								<name>KeyNumber</name>
+								<value><i4>4</i4></value>
+								</member>
+							<member>
+								<name>Node</name>
+								<value><i4>2</i4></value>
+								</member>
+							<member>
+								<name>Page</name>
+								<value><i4>1</i4></value>
+								</member>
+							<member>
+								<name>Port</name>
+								<value><i4>120</i4></value>
+								</member>
+							<member>
+								<name>PositionType</name>
+								<value>key</value>
+								</member>
+							</struct></value>
+					</member>
+					<member>
+						<name>SourceUsesSecondChannel</name>
+						<value><boolean>0</boolean ></value>
+					</member>
+					<member>
+						<name>DestinationPortAddress</name>
+						<value><struct>
+						<member>
+							<name>Node</name>
+							<value><i4>3</i4></value>
+							</member>
+						<member>
+							<name>Port</name>
+							<value><i4>16</i4></value>
+							</member>
+						</struct></value>
+					</member>
+					<member>
+						<name>Priority</name>
+						<value><i4>1</i4></value>
+						</member>
+					<member>
+						<name>DisableCrosspointVolume</name>
+						<value><boolean>0</boolean></value>
+						</member>
+					<member>
+						<name>BeepDestinationOnCall</name>
+						<value><boolean>0</boolean></value>
+						</member>
+					<member>
+						<name>AutolistenFromDest</name>
+						<value><boolean>0</boolean></value>
+						</member>
+					<member>
+						<name>AllowSetInOutGain</name>
+						<value><boolean>0</boolean></value>
+						</member>
+					</struct></value>
+			</member>
+			</struct></value>
+		</data></array></value>
+</param>
+</params>
+</methodCall>
